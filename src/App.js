@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import {react, useEffect, useState} from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
+import AdminLoginPage from "./pages/adminloginpage/adminloginpage";
+import Dashboard from "./pages/dashboards/dashboard";
+import LoadingPage from "./pages/loadingpage/loading";
+import Login from "./pages/loginpage/loginpage";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          { loading ? <LoadingPage type="bars" color="blue"/> : <Login /> }
+        </Route>
+        <Route path="/admin/login" exact>
+          <AdminLoginPage />
+        </Route>
+        <Route path="/dashboard" exact>
+          <Dashboard />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
