@@ -31,7 +31,7 @@ export default function LoginCard() {
                         setUser(data.data);
                         setCheck(true);
                         setError(false);
-                        console.log(data.data);
+                        console.log(user);
                         setTimeout(() => {
                             history.push({pathname: '/dashboard', state: {userDetails: data.data}});
                         }, 4000);
@@ -49,9 +49,7 @@ export default function LoginCard() {
     }
 
     useEffect(() => {
-        if (check) {
-            history.push({pathname: '/dashboard', state: {userDetails: user}});
-        }
+        
     }, [])
 
     return (
@@ -66,9 +64,9 @@ export default function LoginCard() {
             <div className="inputs">
                 <form className="formLogin" onSubmit={checkUser}>
                     <label className="labelText">Username</label><br/>
-                    <input type="text" name="username" placeholder="Enter Username" className="inputLogin" onChange={(e) => setUsername(e.target.value)} /><br/>
+                    <input type="text" name="username" placeholder="Enter Username" required className="inputLogin" onChange={(e) => setUsername(e.target.value)} /><br/>
                     <label className="labelText">Password</label><br/>
-                    <input type="password" name="username" placeholder="Enter Password" className="inputLogin" onChange={(e) => setPassword(e.target.value)}/><br/>
+                    <input type="password" name="username" placeholder="Enter Password" required className="inputLogin" onChange={(e) => setPassword(e.target.value)}/><br/>
                     <button type="submit" className="btnSubmit">Submit</button><br/>
                 </form>
             </div>
