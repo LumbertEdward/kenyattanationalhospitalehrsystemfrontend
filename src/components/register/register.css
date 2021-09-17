@@ -1,4 +1,4 @@
-.containerLogin{
+.containerRegister{
     width: auto;
     height: auto;
     display: flex;
@@ -22,7 +22,7 @@
     width: 90px;
 }
 
-.headingLogin{
+.headingRegister{
     text-align: center;
     font-weight: bolder;
     padding-top: 10px;
@@ -37,10 +37,35 @@
 
 }
 
-.inputLogin{
-    width: 300px;
+.nameSection{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+
+
+}
+
+.firstN{
+    margin-right: 5px;
+
+}
+
+.lastN{
+    margin-right: 5px;
+
+}
+
+.inputSelect{
+    width: 322px;
+    background-color: white;
+    padding: 10px;
+    justify-content: center;  
+    margin-top: 2%; 
+    border: 1px solid black;
+
+}
+
+.inputRegister{
+    width: 300px;
     background-color: white;
     padding: 10px;
     justify-content: center;  
@@ -48,7 +73,7 @@
     border: 1px solid black;
 }
 
-.inputLogin:focus{
+.inputRegister:focus{
 
 }
 
@@ -57,16 +82,22 @@
 
 }
 
-.btnSubmit{
+.labelRegister{
+    font-size: 15px;
+
+}
+
+.btnSubmitRegister{
     background-color: blue;
     border: none;
     width: 100%;
     color: white;
     padding: 13px;
     cursor: pointer;
+    margin-top: 18px;
 }
 
-.btnSubmit:hover{
+.btnSubmitRegister:hover{
     background-color: white;
     border: 1px solid blue;
     color: blue;
@@ -78,12 +109,6 @@
     color: black;
 }
 
-.account{
-    text-decoration: none;
-    color: black;
-    margin-bottom: 7px;
-}
-
-.right{
-    margin-top: 5%;
+.rightRegister{
+    margin-top: 2%;
 }

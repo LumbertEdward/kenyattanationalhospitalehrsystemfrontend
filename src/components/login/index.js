@@ -71,6 +71,7 @@ export default function LoginCard() {
                 </form>
             </div>
             <div className="right">
+                <p className="account"><Link to="/register" className="admin">Don't have an account?</Link></p>
                 <p className="admin"><Link to="/admin/login" className="admin">Login as admin</Link></p>
             </div>
         </div>

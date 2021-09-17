@@ -9,6 +9,7 @@ import AdminLoginPage from "./pages/adminloginpage/adminloginpage";
 import Dashboard from "./pages/dashboards/dashboard";
 import LoadingPage from "./pages/loadingpage/loading";
 import Login from "./pages/loginpage/loginpage";
+import RegisterPage from "./pages/registerpage/registerpage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,9 @@ function App() {
       <Switch>
         <Route path="/" exact>
           { loading ? <LoadingPage type="bars" color="blue"/> : <Login /> }
+        </Route>
+        <Route path="/register" exact>
+          <RegisterPage />
         </Route>
         <Route path="/admin/login" exact>
           <AdminLoginPage />
