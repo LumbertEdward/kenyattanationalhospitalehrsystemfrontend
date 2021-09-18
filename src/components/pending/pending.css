@@ -1,0 +1,98 @@
+.pendingContainer{
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 2px 2px 5px 10px rgba(229,229,229,0.75);
+    -webkit-box-shadow: 2px 2px 5px 10px rgba(229,229,229,0.75);
+    -moz-box-shadow: 2px 2px 5px 10px rgba(229,229,229,0.75);
+}
+
+.titlePending{
+    background-color: #F6F7F6;
+    color:#212F3D;
+    font-weight: bold;
+    padding: 20px;
+
+}
+
+.titleTxt{
+
+}
+
+.pendingTable{
+
+}
+
+.tablePending{
+    margin: 10px;
+
+}
+
+.rowHead{
+    
+}
+
+.rowBody{
+    padding-top: 20px;
+    
+}
+
+.head{
+    width: 250px;
+    color: #212F3D;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+}
+
+.headUser{
+    width: 500px;
+    align-items: center;
+    color: #212F3D;
+}
+
+.headItem{
+    width: 200px;
+    color: black;
+    align-items: center;
+    text-align: center;
+}
+
+.headItemSelect{
+    width: 500px;
+    color: black;
+    align-items: center;
+    text-align: center;
+
+}
+
+.innerActivate{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.selectActivate{
+    width: 200px;
+    border-color: black;
+    font-weight: bold;
+    
+}
+
+.checkIcon{
+    padding: 2px;
+    background-color: green;
+    margin-left: 10px;
+    color: white;
+    border-radius: 5px;
+}
+
+.btnCheck{
+    border:none;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+.optOne{
+    color: black;
+}

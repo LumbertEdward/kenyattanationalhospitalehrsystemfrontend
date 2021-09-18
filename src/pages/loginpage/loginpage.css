@@ -3,6 +3,7 @@
     height: 753px;
     margin: 0%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     background-color: #F6F7F6;
 }

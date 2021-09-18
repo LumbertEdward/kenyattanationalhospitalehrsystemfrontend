@@ -1,0 +1,298 @@
+.bodyContainer{
+    flex: 4;
+    background-color: #F6F7F6;
+}
+
+.toolContainer{
+    background-color: #212F3D;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    top: 0%;
+    position: sticky;
+}
+
+.side{
+    
+
+}
+
+.logoDash{
+    height: 100px;
+    width: 100px;
+
+}
+
+.center{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #212F3D;
+    box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+-webkit-box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+-moz-box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+
+}
+
+.search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.dashIntro{
+    color: white;
+    margin-left: 20px;
+    font-weight: bold;
+
+}
+
+.rightIcons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+
+}
+
+.personIcon{
+    height: 15px;
+    width: 15px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.personIcon:hover{
+
+}
+
+.iconColor{
+    color: black;
+    height: 15px;
+    width: 15px;
+
+
+}
+
+.userName{
+    color: white;
+    margin-right: 15px;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.avatar{
+    cursor: pointer;
+}
+
+.avatar:hover{
+
+}
+
+.bodyContainer{
+    
+}
+
+.bodyAll{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.breadcrumps{
+    
+}
+
+.boxesContainer{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.boxes{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.box1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    padding: 16px;
+    border-radius: 5px;
+    margin: 5px;
+    box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-webkit-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-moz-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+
+}
+
+.boxTop{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.boxContent{
+    background-color: orange;
+    border-radius: 5px;
+    margin-top: -40px;
+}
+
+.notContent{
+    color: white;
+    margin: 30px;
+}
+
+.boxText{
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-end;
+}
+
+.boxName{
+    color: gray;
+    font-size: 15px;
+
+}
+
+.boxValue{
+    margin-top: 5px;
+
+}
+
+.lineBox{
+    background-color: black;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.boxBot{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.txtUpdate{
+    font-size: 12px;
+    margin-left: 5px;
+    color: gray;
+
+
+}
+
+.notBot{
+    color: gray;
+
+}
+
+.row2{
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+}
+
+.sect1{
+    flex: 3;
+    margin-right: 7px;
+}
+
+.tableStaff{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-webkit-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-moz-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+border-radius: 5px;
+}
+
+.introTable{
+    background-color: blue;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+    margin-top: -20px;
+    font-weight: bold;
+    border-radius: 3px;
+    box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-webkit-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-moz-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+}
+
+.innerTable{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.sect2{
+    flex: 1;
+}
+
+.notifications{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-webkit-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-moz-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+border-radius: 5px;
+
+}
+
+.introNotification{
+    background-color: orange;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+    margin-top: -20px;
+    font-weight: bold;
+    border-radius: 3px;
+    box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-webkit-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+-moz-box-shadow: -3px -1px 9px 8px rgba(216,216,216,0.65);
+}
+
+.notificationBody{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.ulNot{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+
+}
+
+.notItem{
+    list-style: none;
+    color: gray;
+    padding-bottom: 10px;
+}
+
+.notText{
+
+}
+
+.notTime{
+    font-size: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+
+}

@@ -33,7 +33,7 @@ function App() {
         <Route path="/admin/login" exact>
           <AdminLoginPage />
         </Route>
-        <Route path="/dashboard" exact>
+        <Route path="/dashboard">
           <Dashboard />
         </Route>
       </Switch>
