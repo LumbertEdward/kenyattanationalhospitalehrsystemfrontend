@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './pending.css';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
@@ -20,7 +20,11 @@ import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
 
-export default function PendingAccounts() {
+export default function PendingAccounts({user}) {
+    const [accounts, setAccounts] = useState([]);
+    const [pending, setPending] = useState([]);
+    const [notification, setNotifications] = useState([]);
+    const [staff, setStaff] = useState("");
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -30,6 +34,69 @@ export default function PendingAccounts() {
         }
         return `${count} notifications`;
       }
+
+      const activateAccount = (e) => {
+          e.preventDefault();
+
+          if (staff !== "No") {
+              console.log(staff);
+            fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/${staff}/activate`)
+            .then(response => response.json())
+            .then((data) => {
+                if (data.message == "Activated") {
+                    console.log("activated")
+                    fetchData();
+                }
+                else{
+                    console.log("not activated");
+                }
+            })
+          }
+          else{
+              console.log("no");
+          }
+
+      }
+
+      const fetchData = () => {
+            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+            .then(response => response.json())
+            .then((data) => {
+                if (data.message == "Found") {
+                    setAccounts(data.data);
+                    setPending(accounts.filter((account) => (account.status == "pending")));
+                }
+                else{
+                    console.log("no data");
+                }
+            })
+      }
+
+      useEffect(() => {
+            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+            .then(response => response.json())
+            .then((data) => {
+                if (data.message == "Found") {
+                    setAccounts(data.data);
+                    setPending(accounts.filter((account) => (account.status == "pending")));
+                }
+                else{
+                    console.log("no data");
+                }
+            })
+
+            //notifications
+          fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setNotifications(data.data);
+              }
+              else{
+                  console.log("no Notification");
+              }
+          })
+      })
     return (
         <div className="bodyContainer">
             <div className="toolContainer">
@@ -40,12 +107,12 @@ export default function PendingAccounts() {
                     <div className="rightIcons">
                         <Tooltip title="notifications">
                             <IconButton aria-label={notificationsLabel(1)} className="btnIcon" >
-                                <Badge badgeContent={5} color="success" style={{height: "18px", width: "18px"}}>
+                                <Badge badgeContent={notification ? notification.length : 0} color="success" style={{height: "18px", width: "18px"}}>
                                     <NotificationsIcon className="iconColor" style={{height: "18px", width: "18px", color: "white"}}/>
                                 </Badge>
                             </IconButton>
                             </Tooltip>
-                        <p className="userName">Admin</p>
+                        <p className="userName">{`${user.username}`}</p>
                         <Tooltip title="Profile">
                             <Avatar style={{height: "28px", width: "28px", backgroundColor: "white"}} className="avatar">
                                 <PersonIcon style={{color: "black"}} />
@@ -82,62 +149,29 @@ export default function PendingAccounts() {
                                 <th className="head">Department</th>
                                 <th className="headUser">Activate</th>
                             </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
+                            {pending.map((item) => (
+                                <tr className="rowBody" key={item._id}>
+                                <td className="headItem">{item.username}</td>
+                                <td className="headItem">{item.qualification}</td>
+                                <td className="headItem">{item.deprtment_id}</td>
                                 <td className="headItemSelect">
                                     <div className="activate">
                                         <div className="innerActivate">
-                                            <select className="selectActivate">
-                                                <option value="Yes">Yes</option>
+                                            <select className="selectActivate" onChange={(e) => setStaff(e.target.value)}>
+                                                <option>select....</option>
+                                                <option value={item._id}>Yes</option>
                                                 <option value="No">No</option>
                                             </select>
                                             <div className="checkIcon">
                                                 <Tooltip title="submit">
-                                                    <button className="btnCheck"><DoneIcon /></button>
+                                                    <button className="btnCheck" type="submit" onClick={activateAccount}><DoneIcon /></button>
                                                 </Tooltip>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
-                                <td className="headItemSelect">
-                                    <div className="activate">
-                                        <div className="innerActivate">
-                                            <select className="selectActivate">
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select>
-                                            <div className="checkIcon">
-                                                <button className="btnCheck"><DoneIcon /></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
-                                <td className="headItemSelect">
-                                    <div className="activate">
-                                        <div className="innerActivate">
-                                            <select className="selectActivate">
-                                                <option value="Yes" className="optOne">Yes</option>
-                                                <option value="No" className="optOne">No</option>
-                                            </select>
-                                            <div className="checkIcon">
-                                                <button className="btnCheck"><DoneIcon /></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            ))}
                         </table>
                     </div>
                 </div>

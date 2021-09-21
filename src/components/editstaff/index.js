@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './editstaff.css';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +21,9 @@ import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function EditStaff() {
+export default function EditStaff({user}) {
+    const [account, setAccount] = useState([]);
+    const [notification, setNotifications] = useState([]);
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -31,6 +33,32 @@ export default function EditStaff() {
         }
         return `${count} notifications`;
       }
+
+      useEffect(() => {
+        fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+        .then(response => response.json())
+        .then((data) => {
+            if (data.message == "Found") {
+                setAccount(data.data);
+            }
+            else{
+                console.log("no data");
+            }
+        })
+
+        //notifications
+        fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
+        .then(response => response.json())
+        .then((data) => {
+            if (data.message == "Found") {
+                setNotifications(data.data);
+                console.log(data);
+            }
+            else{
+                console.log("no Notification");
+            }
+        })
+  }, [])
     return (
         <div className="bodyContainer">
             <div className="toolContainer">
@@ -41,12 +69,12 @@ export default function EditStaff() {
                     <div className="rightIcons">
                         <Tooltip title="notifications">
                             <IconButton aria-label={notificationsLabel(1)} className="btnIcon" >
-                                <Badge badgeContent={5} color="success" style={{height: "18px", width: "18px"}}>
+                                <Badge badgeContent={notification ? notification.length : 0} color="success" style={{height: "18px", width: "18px"}}>
                                     <NotificationsIcon className="iconColor" style={{height: "18px", width: "18px", color: "white"}}/>
                                 </Badge>
                             </IconButton>
                             </Tooltip>
-                        <p className="userName">Admin</p>
+                        <p className="userName">{`${user.username}`}</p>
                         <Tooltip title="Profile">
                             <Avatar style={{height: "28px", width: "28px", backgroundColor: "white"}} className="avatar">
                                 <PersonIcon style={{color: "black"}} />
@@ -83,10 +111,11 @@ export default function EditStaff() {
                                 <th className="head">Department</th>
                                 <th className="headUser">Edit</th>
                             </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
+                            {account.map((item) => (
+                                <tr className="rowBody" key={item._id}>
+                                <td className="headItem">{item.username}</td>
+                                <td className="headItem">{item.qualification}</td>
+                                <td className="headItem">{item.department_id}</td>
                                 <td className="headItemSelect">
                                     <div className="activate">
                                         <div className="innerActivate">
@@ -99,34 +128,7 @@ export default function EditStaff() {
                                     </div>
                                 </td>
                             </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
-                                <td className="headItemSelect">
-                                    <div className="activate">
-                                        <div className="innerActivate">
-                                            <div className="checkIcon">
-                                                <button className="btnCheck"><EditIcon /></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr className="rowBody">
-                                <td className="headItem">Tom Steve</td>
-                                <td className="headItem">Doctor</td>
-                                <td className="headItem">Accident and Emergency Department</td>
-                                <td className="headItemSelect">
-                                    <div className="activate">
-                                        <div className="innerActivate">
-                                            <div className="checkIcon">
-                                                <button className="btnCheck"><EditIcon /></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            ))}
                         </table>
                     </div>
                 </div>

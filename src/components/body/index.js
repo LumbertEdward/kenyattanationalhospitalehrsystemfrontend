@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './body.css';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
@@ -19,7 +19,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 
-export default function Body() {
+export default function Body({user}) {
+    const [rows, setRows] = useState([]);
+    const [notifications, setNotifications] = useState([]);
+    const [pending, setPending] = useState([]);
+    const [activated, setActivated] = useState([]);
+    const [blocked, setBlocked] = useState([])
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -30,14 +35,36 @@ export default function Body() {
         return `${count} notifications`;
       }
 
-      const rows = [
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-          {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-      ]
+      useEffect(() => {
+          fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setRows(data.data);
+                  setPending(rows.filter((row) => (row.status == "pending")));
+                  setActivated(rows.filter((row) => (row.status == "activated")));
+                  setBlocked(rows.filter((row) => (row.status == "blocked")))
+              }
+              else{
+                  console.log("no data");
+              }
+          })
+
+          //notifications
+          fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setNotifications(data.data);
+                  console.log(data);
+              }
+              else{
+                  console.log("no Notification");
+              }
+          })
+
+      })
+
     return (
         <div className="bodyContainer">
             <div className="toolContainer">
@@ -48,12 +75,12 @@ export default function Body() {
                     <div className="rightIcons">
                         <Tooltip title="notifications">
                             <IconButton aria-label={notificationsLabel(1)} className="btnIcon" >
-                                <Badge badgeContent={5} color="success" style={{height: "18px", width: "18px"}}>
+                                <Badge badgeContent={notifications ? notifications.length: 0} color="success" style={{height: "18px", width: "18px"}}>
                                     <NotificationsIcon className="iconColor" style={{height: "18px", width: "18px", color: "white"}}/>
                                 </Badge>
                             </IconButton>
                             </Tooltip>
-                        <p className="userName">Admin</p>
+                        <p className="userName">{`${user.username}`}</p>
                         <Tooltip title="Profile">
                             <Avatar style={{height: "28px", width: "28px", backgroundColor: "white"}} className="avatar">
                                 <PersonIcon style={{color: "black"}} />
@@ -88,7 +115,7 @@ export default function Body() {
                                     </div>
                                     <div className="boxText">
                                         <p className="boxName">Total Employees</p>
-                                        <h2 className="boxValue">30000</h2>
+                                        <h2 className="boxValue">{rows ? rows.length: 0}</h2>
                                     </div>
                                 </div>
                                 <hr className="lineBox" />
@@ -104,7 +131,7 @@ export default function Body() {
                                     </div>
                                     <div className="boxText">
                                         <p className="boxName">Pending Accounts</p>
-                                        <h2 className="boxValue">300</h2>
+                                        <h2 className="boxValue">{pending ? pending.length : 0}</h2>
                                     </div>
                                 </div>
                                 <hr className="lineBox" />
@@ -120,7 +147,7 @@ export default function Body() {
                                     </div>
                                     <div className="boxText">
                                         <p className="boxName">Activated Accounts</p>
-                                        <h2 className="boxValue">30000</h2>
+                                        <h2 className="boxValue">{activated ? activated.length : 0}</h2>
                                     </div>
                                 </div>
                                 <hr className="lineBox" />
@@ -136,7 +163,7 @@ export default function Body() {
                                     </div>
                                     <div className="boxText">
                                         <p className="boxName">Blocked Accounts</p>
-                                        <h2 className="boxValue">30000</h2>
+                                        <h2 className="boxValue">{blocked ? blocked.length : 0}</h2>
                                     </div>
                                 </div>
                                 <hr className="lineBox" />
@@ -168,16 +195,16 @@ export default function Body() {
                                             <TableBody>
                                             {rows.map((row) => (
                                                 <TableRow
-                                                key={row.name}
+                                                key={row._id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
                                                 <TableCell component="th" scope="row">
-                                                    {row.name}
+                                                    {row.username}
                                                 </TableCell>
-                                                <TableCell align="center">{row.calories}</TableCell>
-                                                <TableCell align="center">{row.fat}</TableCell>
-                                                <TableCell align="center">{row.carbs}</TableCell>
-                                                <TableCell align="center">{row.protein}</TableCell>
+                                                <TableCell align="center">{row.qualification}</TableCell>
+                                                <TableCell align="center">{row.department_id}</TableCell>
+                                                <TableCell align="center">{row.residence}</TableCell>
+                                                <TableCell align="center">{row.added_on}</TableCell>
                                                 </TableRow>
                                             ))}
                                             </TableBody>
@@ -193,18 +220,14 @@ export default function Body() {
                                 </div>
                                 <div className="notificationBody">
                                     <ul className="ulNot">
-                                        <li className="notItem">
-                                            <div>
-                                                <p className="notText">Tom has created an account and is requesting for the acccount to be activated</p>
-                                                <p className="notTime">10:20pm</p>
-                                            </div>
-                                        </li>
-                                        <li className="notItem">
-                                            <div>
-                                                <p className="notText">Tom has created an account and is requesting for the acccount to be activated</p>
-                                                <p className="notTime">10:20pm</p>
-                                            </div>
-                                        </li>
+                                        {notifications.map((notification) => (
+                                            <li className="notItem" key={notification._id}>
+                                                <div>
+                                                    <p className="notText">{notification.message}</p>
+                                                    <p className="notTime">{notification.time}</p>
+                                                </div>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>

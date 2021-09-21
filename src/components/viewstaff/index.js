@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './viewstaff.css'
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
@@ -20,7 +20,8 @@ import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
 
-export default function ViewStaff() {
+export default function ViewStaff({user}) {
+    const [notification, setNotifications] = useState([]);
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -30,14 +31,36 @@ export default function ViewStaff() {
         }
         return `${count} notifications`;
       }
-      const rows = [
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-        {name: "Tommy", calories: "Doctor", fat: "Accident and Emergency Department", carbs: "Nairobi", protein: "12/12/2021"},
-    ]
+
+      const [rows, setRows] = useState([]);
+
+      useEffect(() => {
+            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+            .then(response => response.json())
+            .then((data) => {
+                if (data.message == "Found") {
+                    setRows(data.data);
+                    console.log(data);
+                }
+                else{
+                    console.log("no data");
+                }
+            })
+
+            //notifications
+          fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setNotifications(data.data);
+                  console.log(data);
+              }
+              else{
+                  console.log("no Notification");
+              }
+          })
+      }, [])
+
     return (
         <div className="bodyContainer">
             <div className="toolContainer">
@@ -48,12 +71,12 @@ export default function ViewStaff() {
                     <div className="rightIcons">
                         <Tooltip title="notifications">
                             <IconButton aria-label={notificationsLabel(1)} className="btnIcon" >
-                                <Badge badgeContent={5} color="success" style={{height: "18px", width: "18px"}}>
+                                <Badge badgeContent={rows ? notification.length: 0} color="success" style={{height: "18px", width: "18px"}}>
                                     <NotificationsIcon className="iconColor" style={{height: "18px", width: "18px", color: "white"}}/>
                                 </Badge>
                             </IconButton>
                             </Tooltip>
-                        <p className="userName">Admin</p>
+                        <p className="userName">{`${user.username}`}</p>
                         <Tooltip title="Profile">
                             <Avatar style={{height: "28px", width: "28px", backgroundColor: "white"}} className="avatar">
                                 <PersonIcon style={{color: "black"}} />
@@ -97,16 +120,16 @@ export default function ViewStaff() {
                                 <TableBody>
                                 {rows.map((row) => (
                                     <TableRow
-                                    key={row.name}
+                                    key={row._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                     <TableCell component="th" scope="row">
-                                        {row.name}
+                                        {row.username}
                                     </TableCell>
-                                    <TableCell align="center">{row.calories}</TableCell>
-                                    <TableCell align="center">{row.fat}</TableCell>
-                                    <TableCell align="center">{row.carbs}</TableCell>
-                                    <TableCell align="center">{row.protein}</TableCell>
+                                    <TableCell align="center">{row.qualification}</TableCell>
+                                    <TableCell align="center">{row.department_id}</TableCell>
+                                    <TableCell align="center">{row.residence}</TableCell>
+                                    <TableCell align="center">{row.date_approved}</TableCell>
                                     </TableRow>
                                 ))}
                                 </TableBody>

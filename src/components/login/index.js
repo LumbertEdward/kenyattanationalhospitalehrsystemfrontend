@@ -34,7 +34,7 @@ export default function LoginCard() {
                         console.log(user);
                         setTimeout(() => {
                             history.push({pathname: '/dashboard', state: {userDetails: data.data}});
-                        }, 4000);
+                        }, 3000);
                         
                     }
                 })

@@ -31,6 +31,9 @@ export default function Register() {
     const checkUser = (e) => {
         e.preventDefault();
 
+        const message = `${username} has created an account and is requesting for the acccount to be activated`;
+        const receiver_username = "admin";
+
         const pass = password === confirmpassword;
 
         if (pass) {
@@ -52,6 +55,8 @@ export default function Register() {
                 added_by: added_by,
             }
 
+            console.log(department_id);
+
             axios({
                 method: 'post',
                 url: 'https://ehrsystembackend.herokuapp.com/KNH/staff/register',
@@ -68,6 +73,11 @@ export default function Register() {
                             history.push({pathname: '/'});
                         }, 4000);
                         
+                        fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/addNotification?message=${message}&&sender_username=${username}&&category=${qualification}&&receiver_username=${receiver_username}`)
+                        .then(response => response.json())
+                        .then((data) => {
+                            console.log(data);
+                        })
                     }
                 })
                 .catch((error) => {
@@ -109,6 +119,7 @@ export default function Register() {
                         <div className="firstN">
                             <label className="labelText">Qualification</label><br/>
                             <select className="inputSelect" onChange={(e) => {setQualification(e.target.value); setAccessLevel(e.target.value)}}>
+                                <option>Select---</option>
                                 <option value="Doctor">Doctor</option>
                                 <option value="Nurse">Nurse</option>
                                 <option value="Pharmacist">Pharmacist</option>
@@ -119,6 +130,7 @@ export default function Register() {
                         <div className="lastN">
                             <label className="labelText">Select Department</label><br/>
                             <select className="inputSelect" onChange={(e) => setDepartmentId(e.target.value)}>
+                                <option>Select---</option>
                                 <option value="1">Nursing Department</option>
                                 <option value="2">Mental Health Department</option>
                                 <option value="3">Accident and Emergency Department</option>
@@ -129,6 +141,7 @@ export default function Register() {
                         <div className="userN">
                             <label className="labelText">Select Gender</label><br/>
                             <select className="inputSelect" onChange={(e) => setGender(e.target.value)}>
+                                <option>Select---</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
