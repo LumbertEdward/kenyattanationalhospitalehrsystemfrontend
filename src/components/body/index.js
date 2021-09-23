@@ -83,7 +83,7 @@ export default function Body({user}) {
                         <p className="userName">{`${user.username}`}</p>
                         <Tooltip title="Profile">
                             <Avatar style={{height: "28px", width: "28px", backgroundColor: "white"}} className="avatar">
-                                <PersonIcon style={{color: "black"}} />
+                                <Link to="/profile"><PersonIcon style={{color: "black"}}/></Link>
                             </Avatar>
                         </Tooltip>
                     </div>

@@ -4,7 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,7 +13,11 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Sidebar({user, change}) {
+    const history = useHistory();
 
+    const goToProfile = () => {
+        history.push('/profile');
+    }
 
     const changeToLogin = () => {
         change(true);

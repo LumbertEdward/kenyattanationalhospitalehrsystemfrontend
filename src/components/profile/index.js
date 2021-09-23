@@ -64,8 +64,10 @@ export default function Profile({user}) {
                             setLoadingStatus(false);
                             setCheck(true);
                             setError(false);
+                            setNewUser({});
                             setTimeout(() => {
                                 setCheck(false);
+                                fetchData();
                             }, 2000);
                         }
                     })
@@ -75,7 +77,31 @@ export default function Profile({user}) {
           }
       }
 
+      const fetchData = () => {
+        fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/details?username=${user.username}`)
+        .then(response => response.json())
+        .then((data) => {
+            if (data.message == "Found") {
+                setNewUser(data.data);
+            }
+            else{
+                console.log("no data");
+            }
+        })
+    }
+
       useEffect(() => {
+
+        fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/details?username=${user.username}`)
+        .then(response => response.json())
+        .then((data) => {
+            if (data.message == "Found") {
+                setNewUser(data.data);
+            }
+            else{
+                console.log("no data");
+            }
+        })
         //notifications
         fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
         .then(response => response.json())
@@ -145,43 +171,43 @@ export default function Profile({user}) {
                                 <div className="nameSectionProf">
                                     <div className="firstNProf">
                                         <label className="labelRegisterProf">First Name</label><br/>
-                                        <input type="text" name="firstname" placeholder={user.firstname} required className="inputRegisterProf" onChange={(e) => setFirstname(e.target.value)} />
+                                        <input type="text" name="firstname" placeholder={newUser.firstname} required className="inputRegisterProf" onChange={(e) => setFirstname(e.target.value)} />
                                     </div>
                                     <div className="lastNProf">
                                         <label className="labelRegisterProf">Last Name</label><br/>
-                                        <input type="text" name="lastname" placeholder={user.lastname} required className="inputRegisterProf" onChange={(e) => setLastname(e.target.value)} />
+                                        <input type="text" name="lastname" placeholder={newUser.lastname} required className="inputRegisterProf" onChange={(e) => setLastname(e.target.value)} />
                                     </div>
                                     <div className="userNProf">
                                         <label className="labelRegisterProf">Username</label><br/>
-                                        <input type="text" name="username" disabled placeholder={user.username} className="inputRegisterProf" /><br/>
+                                        <input type="text" name="username" disabled placeholder={newUser.username} className="inputRegisterProf" /><br/>
                                     </div>
                                 </div>
                                 <div className="nameSectionProf">
                                     <div className="firstNProf">
                                         <label className="labelRegisterProf">Qualification</label><br/>
-                                        <input type="text" name="firstname" disabled placeholder={user.qualification} className="inputRegisterProf" />
+                                        <input type="text" name="firstname" disabled placeholder={newUser.qualification} className="inputRegisterProf" />
                                     </div>
                                     <div className="lastNProf">
                                         <label className="labelRegisterProf">Department</label><br/>
-                                        <input type="text" name="lastname" disabled placeholder={user.department_id} className="inputRegisterProf" />
+                                        <input type="text" name="lastname" disabled placeholder={newUser.department_id} className="inputRegisterProf" />
                                     </div>
                                     <div className="userNProf">
                                         <label className="labelRegisterProf">Gender</label><br/>
-                                        <input type="text" name="username" disabled placeholder={user.gender} className="inputRegisterProf" /><br/>
+                                        <input type="text" name="username" disabled placeholder={newUser.gender} className="inputRegisterProf" /><br/>
                                     </div>
                                 </div>
                                 <div className="nameSectionProf">
                                     <div className="firstNProf">
                                         <label className="labelRegisterProf">Residence</label><br/>
-                                        <input type="text" name="firstname" placeholder={user.residence} className="inputRegisterProf" onChange={(e) => setResidence(e.target.value)} />
+                                        <input type="text" name="firstname" placeholder={newUser.residence} className="inputRegisterProf" onChange={(e) => setResidence(e.target.value)} />
                                     </div>
                                     <div className="lastNProf">
                                         <label className="labelRegisterProf">Country</label><br/>
-                                        <input type="text" name="lastname" disabled placeholder={user.country} className="inputRegisterProf" />
+                                        <input type="text" name="lastname" disabled placeholder={newUser.country} className="inputRegisterProf" />
                                     </div>
                                     <div className="userNProf">
                                         <label className="labelRegisterProf">County</label><br/>
-                                        <input type="text" name="username" disabled placeholder={user.county} className="inputRegisterProf" /><br/>
+                                        <input type="text" name="username" disabled placeholder={newUser.county} className="inputRegisterProf" /><br/>
                                     </div>
                                 </div>
                                 <div className="nameSectionProf">
