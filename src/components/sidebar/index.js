@@ -4,14 +4,21 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import EditIcon from '@mui/icons-material/Edit';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-export default function Sidebar({user}) {
+export default function Sidebar({user, change}) {
+
+
+    const changeToLogin = () => {
+        change(true);
+    }
+
     return (
         <div className="sideContainer">
             <div className="sideBar">
@@ -59,7 +66,21 @@ export default function Sidebar({user}) {
                             <p className="iconName" style={{paddingRight: "26px", fontSize: "14px", fontWeight: "bold"}}><Link to="/suspended" className="lnk">Suspended</Link></p>
                         </li>
                     </ul>
-                </div></> : null}
+                </div>
+                <p className="titleList" style={{fontWeight: "bold", marginTop: "10px", color: "gray"}}>Profile</p>
+                <div className="options">
+                    <ul className="unordered">
+                        <li className="optionOne">
+                            <AccountBoxIcon className="lnk" style={{height: "18px", width: "18px", marginRight: "15px"}}/>
+                            <p className="iconName" style={{paddingRight: "26px", fontSize: "14px", fontWeight: "bold"}}><Link to="/profile" className="lnk">My Profile</Link></p>
+                        </li>
+                        <li className="optionOne">
+                            <LogoutIcon className="lnk" style={{height: "18px", width: "18px", marginRight: "15px"}}/>
+                            <p className="iconName" style={{paddingRight: "26px", fontSize: "14px", fontWeight: "bold", cursor: "pointer"}} onClick={changeToLogin}>Log Out</p>
+                        </li>
+                    </ul>
+                </div>
+                </> : null}
             </div>
         </div>
     )

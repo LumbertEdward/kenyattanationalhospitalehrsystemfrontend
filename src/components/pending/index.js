@@ -19,12 +19,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
+import Alert from '@mui/material/Alert';
 
 export default function PendingAccounts({user}) {
-    const [accounts, setAccounts] = useState([]);
     const [pending, setPending] = useState([]);
     const [notification, setNotifications] = useState([]);
     const [staff, setStaff] = useState("");
+    const [activationCheck, setActivationCheck] = useState(false);
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -39,13 +40,18 @@ export default function PendingAccounts({user}) {
           e.preventDefault();
 
           if (staff !== "No") {
-              console.log(staff);
-            fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/${staff}/activate`)
+            console.log(staff);
+            fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/activate?username=${staff}`)
             .then(response => response.json())
             .then((data) => {
                 if (data.message == "Activated") {
-                    console.log("activated")
-                    fetchData();
+                    setActivationCheck(true);
+                    setPending([]);
+                    setTimeout(() => {
+                        fetchData();
+                        setActivationCheck(false)
+                    }, 2000);
+                    
                 }
                 else{
                     console.log("not activated");
@@ -59,12 +65,11 @@ export default function PendingAccounts({user}) {
       }
 
       const fetchData = () => {
-            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/accounts/pending")
             .then(response => response.json())
             .then((data) => {
                 if (data.message == "Found") {
-                    setAccounts(data.data);
-                    setPending(accounts.filter((account) => (account.status == "pending")));
+                    setPending(data.data);
                 }
                 else{
                     console.log("no data");
@@ -73,12 +78,11 @@ export default function PendingAccounts({user}) {
       }
 
       useEffect(() => {
-            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+            fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/accounts/pending")
             .then(response => response.json())
             .then((data) => {
                 if (data.message == "Found") {
-                    setAccounts(data.data);
-                    setPending(accounts.filter((account) => (account.status == "pending")));
+                    setPending(data.data);
                 }
                 else{
                     console.log("no data");
@@ -137,6 +141,7 @@ export default function PendingAccounts({user}) {
                         </Link>
                     </Breadcrumbs>
                 </div>
+                {activationCheck ? <div className="alertOuter"><Alert severity="success" className="alert">Activation Successful</Alert></div> : null}
                 <div className="pendingContainer">
                     <div className="titlePending">
                         <p className="titleTxt">Pending Accounts</p>
@@ -159,7 +164,7 @@ export default function PendingAccounts({user}) {
                                         <div className="innerActivate">
                                             <select className="selectActivate" onChange={(e) => setStaff(e.target.value)}>
                                                 <option>select....</option>
-                                                <option value={item._id}>Yes</option>
+                                                <option value={item.username}>Yes</option>
                                                 <option value="No">No</option>
                                             </select>
                                             <div className="checkIcon">

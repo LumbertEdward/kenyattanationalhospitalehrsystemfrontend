@@ -1,0 +1,81 @@
+.profileBody{
+    display: flex;
+    flex-direction: column;
+}
+
+.profilePic{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.personProf{
+    background-color: gray;
+    color: white;
+    border-radius: 50px;
+    padding: 30px;
+}
+
+.formProf{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.nameSectionProf{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1000px) {
+    .nameSectionProf{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.firstNProf{
+    margin-right: 5px;
+
+}
+
+.lastNProf{
+    margin-right: 5px;
+
+}
+
+.inputRegisterProf{
+    width: 300px;
+    background-color: white;
+    padding: 10px;
+    justify-content: center;  
+    margin-top: 2%; 
+    border: 1px solid black;
+    color: black;
+    font-weight: bold;
+}
+
+.labelRegisterProf{
+    color: darkgray;
+}
+
+.btnProf{
+    background-color: blue;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.loadRowProf{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 5px;
+    margin-top: 10px;
+
+}

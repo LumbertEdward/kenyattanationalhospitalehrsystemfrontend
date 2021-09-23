@@ -10,3 +10,4 @@ export { default as PendingAccounts } from './pending';
 export { default as EditStaff } from './viewstaff';
 export { default as ViewStaff } from './viewstaff';
 export { default as Suspended } from './suspended';
+export { default as Profile } from './profile';

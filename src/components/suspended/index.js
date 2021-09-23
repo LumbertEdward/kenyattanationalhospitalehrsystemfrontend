@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './suspended.css'
+import Alert from '@mui/material/Alert';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
@@ -21,9 +22,10 @@ import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
 
 export default function Suspended({user}) {
-    const [accounts, setAccounts] = useState([]);
     const [suspended, setSuspended] = useState([]);
     const [notification, setNotifications] = useState([]);
+    const [activationCheck, setActivationCheck] = useState(false);
+    const [staff, setStaff] = useState("");
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -34,13 +36,53 @@ export default function Suspended({user}) {
         return `${count} notifications`;
       }
 
+      const activateAccount = (e) => {
+        e.preventDefault();
+
+        if (staff !== "No") {
+          console.log(staff);
+          fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/activate?username=${staff}`)
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Activated") {
+                  setActivationCheck(true);
+                  setSuspended([]);
+                  setTimeout(() => {
+                      fetchData();
+                      setActivationCheck(false);
+                  }, 2000);
+                  
+              }
+              else{
+                  console.log("not activated");
+              }
+          })
+        }
+        else{
+            console.log("no");
+        }
+
+    }
+
+    const fetchData = () => {
+          fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/accounts/suspended")
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setSuspended(data.data);
+              }
+              else{
+                  console.log("no data");
+              }
+          })
+    }
+
       useEffect(() => {
-        fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+        fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/accounts/suspended")
         .then(response => response.json())
         .then((data) => {
             if (data.message == "Found") {
-                setAccounts(data.data);
-                setSuspended(accounts.filter((account) => (account.status == "blocked")))
+                setSuspended(data.data);
             }
             else{
                 console.log("no data");
@@ -100,6 +142,7 @@ export default function Suspended({user}) {
                         </Link>
                     </Breadcrumbs>
                 </div>
+                {activationCheck ? <div className="alertOuter"><Alert severity="success" className="alert">Activation Successful</Alert></div> : null}
                 <div className="pendingContainer">
                     <div className="titlePending">
                         <p className="titleTxt">Suspended Accounts</p>
@@ -110,7 +153,7 @@ export default function Suspended({user}) {
                                 <th className="head">Username</th>
                                 <th className="head">Qualification</th>
                                 <th className="head">Department</th>
-                                <th className="headUser">Action</th>
+                                <th className="headUser">Activate</th>
                             </tr>
                             {suspended.map((item) => (
                                 <tr className="rowBody" key={item._id}>
@@ -120,13 +163,14 @@ export default function Suspended({user}) {
                                 <td className="headItemSelect">
                                     <div className="activate">
                                         <div className="innerActivate">
-                                            <select className="selectActivate">
-                                                <option value="Yes">Activate</option>
-                                                <option value="No">Delete</option>
+                                            <select className="selectActivate" onChange={(e) => setStaff(e.target.value)}>
+                                                <option>Select....</option>
+                                                <option value={item.username}>Yes</option>
+                                                <option value="No">No</option>
                                             </select>
                                             <div className="checkIcon">
                                                 <Tooltip title="submit">
-                                                    <button className="btnCheck"><DoneIcon /></button>
+                                                    <button className="btnCheck" type="submit" onClick={activateAccount}><DoneIcon /></button>
                                                 </Tooltip>
                                             </div>
                                         </div>

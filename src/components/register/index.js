@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import './register.css';
 import Alert from '@mui/material/Alert';
+import ReactLoading from 'react-loading';
 import {
     Link,
     useHistory
   } from "react-router-dom";
-  const axios = require('axios').default;
+const axios = require('axios').default;
 
 export default function Register() {
     const [firstname, setFirstname] = useState("");
@@ -23,6 +24,7 @@ export default function Register() {
     const [gender, setGender] = useState("");
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
+    const [loadingStatus, setLoadingStatus] = useState(false);
     
     const [check, setCheck] = useState(false);
     const [error, setError] = useState(false);
@@ -37,6 +39,8 @@ export default function Register() {
         const pass = password === confirmpassword;
 
         if (pass) {
+
+            setLoadingStatus(true);
 
             const staffDetails = {
                 username: username,
@@ -63,10 +67,12 @@ export default function Register() {
                 data: staffDetails})
                 .then((data) => {
                     if (data.data.message != "Inserted Successfully") {
+                        setLoadingStatus(false);
                         setError(true);
                         setCheck(false);
                     }
                     else{
+                        setLoadingStatus(false);
                         setCheck(true);
                         setError(false);
                         setTimeout(() => {
@@ -81,6 +87,7 @@ export default function Register() {
                     }
                 })
                 .catch((error) => {
+                    setLoadingStatus(false);
                     console.log(error);
                 });
         }
@@ -97,7 +104,8 @@ export default function Register() {
             </div>
             <h2 className="headingRegister">Sign Up</h2>
             {error ? <Alert severity="error">Oops!!, Registration Not Successfull</Alert>: null}
-            {check ? <Alert severity="success">Registration Successfull!</Alert> : null}
+            {check ? <Alert severity="success">Registration Successfull!....Wait for account approval by the admin</Alert> : null}
+            {loadingStatus ? <div className="loadRow"><ReactLoading type="spinningBubbles" color="blue" height={30} width={30} className="loadBalls"/></div> : null}
             <div className="inputs">
                 <form className="formLogin" onSubmit={checkUser}>
                     <div className="nameSection">

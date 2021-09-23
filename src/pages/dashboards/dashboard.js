@@ -1,11 +1,12 @@
 import {react, useState, useEffect} from 'react'
 import { useHistory, useLocation } from 'react-router'
-import { ActivatedAccounts, Body, PendingAccounts, Sidebar, Suspended, ViewStaff } from '../../components';
+import { ActivatedAccounts, Body, PendingAccounts, Profile, Sidebar, Suspended, ViewStaff, LoginCard } from '../../components';
 import './dashboard.css';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect
   } from "react-router-dom";
 import EditStaff from '../../components/editstaff';
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
     const [user, setUser] = useState({});
     const [loaded, setLoaded] = useState(false);
     const [notifications, setNotifications] = useState([]);
-
+    const [login, setLogin] = useState(false);
 
     useEffect(() => {
         fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/viewNotifications?id=${user.username}`)
@@ -40,12 +41,13 @@ export default function Dashboard() {
         else{
             history.push({pathname: "/"});
         }
+
     }, [])
     return (
         <div className="dashContainer">
             <div className="dashInner">
-                <Router>
-                    <Sidebar user={user}/>
+            {!login ? <Router>
+                    {user.username ? <Sidebar user={user} change={setLogin}/> : null}
                     {user.username == "admin" ? <><Route path="/dashboard/" exact>
                         <Body user={user}/>
                     </Route>
@@ -63,8 +65,12 @@ export default function Dashboard() {
                     </Route>
                     <Route path="/suspended" exact>
                         <Suspended user={user} notification={notifications}/>
-                    </Route></> : null}
-                </Router>
+                    </Route>
+                    <Route path="/profile" exact>
+                        <Profile user={user}/>
+                    </Route>
+                    </> : null}
+                </Router>  : <Redirect to="/" />}
             </div>
         </div> 
     )

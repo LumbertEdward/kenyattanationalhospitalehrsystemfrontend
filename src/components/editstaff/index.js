@@ -20,10 +20,16 @@ import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Alert from '@mui/material/Alert';
 
 export default function EditStaff({user}) {
     const [account, setAccount] = useState([]);
     const [notification, setNotifications] = useState([]);
+    const [id, setId] = useState("");
+    const [staff, setStaff] = useState("");
+    const [edit, setEdit] = useState("")
+    const [activationCheck, setActivationCheck] = useState(false);
     function notificationsLabel(count) {
         if (count === 0) {
           return 'no notifications';
@@ -33,6 +39,61 @@ export default function EditStaff({user}) {
         }
         return `${count} notifications`;
       }
+
+      const deleteUser = () => {
+          if (staff !== "") {
+                fetch(`https://ehrsystembackend.herokuapp.com/KNH/staff/delete?username=${staff}`)
+                .then(response => response.json())
+                .then((data) => {
+                    if (data.message == "Deleted") {
+                        setActivationCheck(true);
+                        setAccount([])
+                        setTimeout(() => {
+                            setActivationCheck(false);
+                            fetchData();
+                        }, 2000); 
+                        
+                    }
+                    else{
+                        setActivationCheck(false);
+                        console.log("no data");
+                    }
+                })
+          }
+          else{
+            setActivationCheck(false);
+            console.log("no input");
+          }
+      }
+
+      const fetchData = () => {
+        fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
+        .then(response => response.json())
+        .then((data) => {
+            if (data.message == "Found") {
+                setAccount(data.data);
+            }
+            else{
+                console.log("no data");
+            }
+        })
+    }
+
+      const editUser = () => {
+        console.log("here")
+
+        /**fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/delete?")
+          .then(response => response.json())
+          .then((data) => {
+              if (data.message == "Found") {
+                  setAccount(data.data);
+              }
+              else{
+                  console.log("no data");
+              }
+          })**/
+
+    }
 
       useEffect(() => {
         fetch("https://ehrsystembackend.herokuapp.com/KNH/staff/all")
@@ -99,6 +160,7 @@ export default function EditStaff({user}) {
                         </Link>
                     </Breadcrumbs>
                 </div>
+                {activationCheck ? <div className="alertOuter"><Alert severity="success" className="alert">Deleted Successfully</Alert></div> : null}
                 <div className="pendingContainer">
                     <div className="titlePending">
                         <p className="titleTxt">Edit Accounts</p>
@@ -110,6 +172,7 @@ export default function EditStaff({user}) {
                                 <th className="head">Qualification</th>
                                 <th className="head">Department</th>
                                 <th className="headUser">Edit</th>
+                                <th className="headUser">Delete</th>
                             </tr>
                             {account.map((item) => (
                                 <tr className="rowBody" key={item._id}>
@@ -119,9 +182,30 @@ export default function EditStaff({user}) {
                                 <td className="headItemSelect">
                                     <div className="activate">
                                         <div className="innerActivate">
+                                        <select className="selectActivate" onChange={(e) => setEdit(e.target.value)}>
+                                                <option>Select....</option>
+                                                <option value={item.username}>Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
                                             <div className="checkIcon">
                                                 <Tooltip title="Edit">
-                                                    <button className="btnCheck"><EditIcon /></button>
+                                                    <button className="btnCheck" type="submit" onClick={editUser}><EditIcon /></button>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className="headItemSelect">
+                                    <div className="activate">
+                                        <div className="innerActivate">
+                                        <select className="selectActivate" onChange={(e) => setStaff(e.target.value)}>
+                                                <option>Select....</option>
+                                                <option value={item.username}>Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                            <div className="checkIcon">
+                                                <Tooltip title="Edit">
+                                                    <button className="btnCheck" type="submit" onClick={deleteUser}><DeleteIcon /></button>
                                                 </Tooltip>
                                             </div>
                                         </div>

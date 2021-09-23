@@ -43,7 +43,7 @@ export default function Body({user}) {
                   setRows(data.data);
                   setPending(rows.filter((row) => (row.status == "pending")));
                   setActivated(rows.filter((row) => (row.status == "activated")));
-                  setBlocked(rows.filter((row) => (row.status == "blocked")))
+                  setBlocked(rows.filter((row) => (row.status == "suspended")))
               }
               else{
                   console.log("no data");
