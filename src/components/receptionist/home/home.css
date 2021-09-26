@@ -1,0 +1,49 @@
+.homeAppContainer{
+    flex: 4;
+    background-color: #F6F7F6;
+}
+
+.receptionAll{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+}
+
+.itemOne{
+    width: 360px;
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    margin: 5px;
+    border-radius: 3px;
+    box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+-webkit-box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+-moz-box-shadow: 3px 7px 7px 4px rgba(216,216,216,0.69);
+}
+
+.titleItem{
+    padding-top: 10px;
+    font-weight: normal;
+}
+
+.totalItem{
+    font-weight: bolder;
+    padding-top: 10px;
+    font-size: 19px;
+
+}
+
+.iconBelow{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.iconBelow .noteIcon{
+    color: green;
+    width: 40px;
+    height: 40px;
+}

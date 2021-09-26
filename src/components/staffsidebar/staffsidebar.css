@@ -1,0 +1,45 @@
+.sideB{
+    width: 250px;
+    height: 100vh;
+    background-color: #2f4050;
+    
+}
+
+.sideList{
+    height: auto;
+    width: 100%;
+    padding: 0%;
+
+}
+
+.sideList .listItm{
+    width: 100%;
+    height: 50px;
+    list-style-type: none;
+    margin: 0%;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.sideList #active{
+    background-color: #293846;
+}
+
+.sideList .listItm:hover{
+    cursor: pointer;
+    background-color: #293846;
+}
+
+.listItm .iconLst{
+    flex: 30%;
+    display: grid;
+    place-items: center;
+}
+
+.listItm .titleLst{
+    flex: 70%;
+}

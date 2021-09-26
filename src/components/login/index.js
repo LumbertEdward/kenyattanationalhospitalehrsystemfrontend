@@ -38,11 +38,12 @@ export default function LoginCard() {
                         setCheck(true);
                         setError(false);
                         setUserStatus(false);
-                        console.log(user);
+                        console.log(data.data);
+                        
                         if (data.data.status == "activated") {
                             setUserStatus(false);
                             setTimeout(() => {
-                                if (userStatus) {
+                                if (!userStatus) {
                                     history.push({pathname: '/dashboard', state: {userDetails: data.data}});
                                 }
                             }, 3000);

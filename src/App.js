@@ -10,6 +10,7 @@ import Dashboard from "./pages/dashboards/dashboard";
 import LoadingPage from "./pages/loadingpage/loading";
 import Login from "./pages/loginpage/loginpage";
 import RegisterPage from "./pages/registerpage/registerpage";
+import StaffDashbaord from "./pages/staffdashboard/staffdashbaord";
 
 function App() {
   const [loading, setLoading] = useState(true);

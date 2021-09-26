@@ -1,6 +1,6 @@
 import {react, useState, useEffect} from 'react'
 import { useHistory, useLocation } from 'react-router'
-import { ActivatedAccounts, Body, PendingAccounts, Profile, Sidebar, Suspended, ViewStaff, LoginCard } from '../../components';
+import { ActivatedAccounts, Body, PendingAccounts, Profile, Sidebar, Suspended, ViewStaff, LoginCard, ReceptionistHome, AddAppointment, ApprovedAppointments, PendingAppointments, NewPatient, AllPatients, MakePayment, AllPayments, BillingReport, TreatmentReport, LabReport, DrugDispensingReport } from '../../components';
 import './dashboard.css';
 import {
     BrowserRouter as Router,
@@ -48,7 +48,7 @@ export default function Dashboard() {
             <div className="dashInner">
             {!login ? <Router>
                     {user.username ? <Sidebar user={user} change={setLogin}/> : null}
-                    {user.username == "admin" ? <><Route path="/dashboard/" exact>
+                    {user.access_level == "admin" ? <><Route path="/dashboard/" exact>
                         <Body user={user}/>
                     </Route>
                     <Route path="/view" exact>
@@ -69,7 +69,48 @@ export default function Dashboard() {
                     <Route path="/profile" exact>
                         <Profile user={user}/>
                     </Route>
-                    </> : null}
+                    </> 
+                    :
+                    <><Route path="/dashboard/" exact>
+                        <ReceptionistHome user={user}/>
+                    </Route>
+                    <Route path="/addAppointment" exact>
+                        <AddAppointment user={user}/>
+                    </Route>
+                    <Route path="/approvedAppointments" exact>
+                        <ApprovedAppointments user={user}/>
+                    </Route>
+                    <Route path="/pendingAppointments" exact>
+                        <PendingAppointments user={user}/>
+                    </Route>
+                    <Route path="/newPatient" exact>
+                        <NewPatient user={user}/>
+                    </Route>
+                    <Route path="/allPatients" exact>
+                        <AllPatients user={user}/>
+                    </Route>
+                    <Route path="/makePayment" exact>
+                        <MakePayment user={user}/>
+                    </Route>
+                    <Route path="/allPayments" exact>
+                        <AllPayments user={user}/>
+                    </Route>
+                    <Route path="/billingReports" exact>
+                        <BillingReport user={user}/>
+                    </Route>
+                    <Route path="/treatmentReports" exact>
+                        <TreatmentReport user={user}/>
+                    </Route>
+                    <Route path="/labReports" exact>
+                        <LabReport user={user}/>
+                    </Route>
+                    <Route path="/drugReports" exact>
+                        <DrugDispensingReport user={user}/>
+                    </Route>
+                    <Route path="/profile" exact>
+                        <Profile user={user}/>
+                    </Route>
+                    </> }
                 </Router>  : <Redirect to="/" />}
             </div>
         </div> 
