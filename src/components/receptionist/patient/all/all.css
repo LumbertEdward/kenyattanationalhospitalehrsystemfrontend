@@ -2,3 +2,12 @@
     flex: 4;
     background-color: #F6F7F6;
 }
+
+.tableAllPatients{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px;
+    
+}

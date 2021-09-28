@@ -129,7 +129,7 @@ export default function ViewStaff({user}) {
                                     <TableCell align="center">{row.qualification}</TableCell>
                                     <TableCell align="center">{row.department_id}</TableCell>
                                     <TableCell align="center">{row.residence}</TableCell>
-                                    <TableCell align="center">{row.date_approved}</TableCell>
+                                    <TableCell align="center">{row.added_on}</TableCell>
                                     </TableRow>
                                 ))}
                                 </TableBody>
