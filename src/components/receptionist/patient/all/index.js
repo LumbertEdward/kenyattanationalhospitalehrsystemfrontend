@@ -111,18 +111,24 @@ export default function AllPatients({user}) {
                             <Link underline="hover" color="inherit" href="/">
                                 Home
                             </Link>
+                            <Link underline="hover" color="inherit" href="/">
+                                Patients
+                            </Link>
                             <Link
                             underline="hover"
                             color="text.primary"
                             href="#"
                             aria-current="page"
                             >
-                                Dashboard
+                                All Patients
                             </Link>
                         </Breadcrumbs>
                     </div>
-                    <div>
-                        search
+                    <div className="searchBox">
+                        <div className="innerSearch">
+                            <input type="text" placeholder="Enter ID" className="inSearch"/>
+                            <button className="btnSearch">Search</button>
+                        </div>
                     </div>
                     <div className="tableAllPatients">
                         <div className="tableStaff">
